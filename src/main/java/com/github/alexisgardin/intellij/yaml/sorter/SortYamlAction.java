@@ -82,7 +82,7 @@ public class SortYamlAction extends AnAction {
     }
   }
 
-  public <K extends String, V> Map<K, V> sortByKey(Map<K, V> map) {
+  private  <K extends String, V> Map<K, V> sortByKey(Map<K, V> map) {
     List<Map.Entry<K, V>> list = new ArrayList<>(map.entrySet());
     list.sort(Map.Entry.comparingByKey());
 
