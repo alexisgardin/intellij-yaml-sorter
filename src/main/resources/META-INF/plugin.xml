@@ -1,6 +1,6 @@
 <idea-plugin>
     <id>com.github.alexisgardin.intellijyamlsorter</id>
-    <name>intellij-yaml-sorter</name>
+    <name>yaml-sorter</name>
     <vendor>alexisgardin</vendor>
 
     <!-- Product and plugin compatibility requirements -->
