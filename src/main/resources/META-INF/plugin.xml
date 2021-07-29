@@ -7,13 +7,12 @@
     <!-- https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
     <depends>com.intellij.modules.platform</depends>
 
-    <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.github.alexisgardin.intellijyamlsorter.services.MyApplicationService"/>
-        <projectService serviceImplementation="com.github.alexisgardin.intellijyamlsorter.services.MyProjectService"/>
-    </extensions>
 
-    <applicationListeners>
-        <listener class="com.github.alexisgardin.intellijyamlsorter.listeners.MyProjectManagerListener"
-                  topic="com.intellij.openapi.project.ProjectManagerListener"/>
-    </applicationListeners>
+    <actions>
+        <action id="com.github.alexisgardin.intellij.yaml.sorter.SortYamlAction"
+                class="com.github.alexisgardin.intellij.yaml.sorter.SortYamlAction" text="Sort Yaml"
+                description="Sort your yaml">
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+        </action>
+    </actions>
 </idea-plugin>
