@@ -31,6 +31,7 @@ dependencies {
     implementation("org.yaml:snakeyaml:1.29")
 }
 
+
 // Configure gradle-intellij-plugin plugin.
 // Read more: https://github.com/JetBrains/gradle-intellij-plugin
 intellij {
@@ -77,6 +78,7 @@ tasks {
     withType<Detekt> {
         jvmTarget = "1.8"
     }
+
 
     patchPluginXml {
         version.set(properties("pluginVersion"))

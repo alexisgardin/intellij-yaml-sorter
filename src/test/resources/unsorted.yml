@@ -1,0 +1,171 @@
+server:
+  servlet:
+    context-path: randomValue
+disable-schedule-message: randomValue
+encryption:
+  uri: randomValue
+  key-name: randomValue
+package-tong-file:
+  start-process-on-token-added: randomValue
+  next-blocked-interval-seconds: randomValue
+  next-pagination-interval-seconds: randomValue
+  max-buffer-size: randomValue
+ext:
+  externServices:
+    client-id-prop: randomValue
+    client-secret-prop: randomValue
+    document-format: randomValue
+    headerkeys: randomValue
+    scopes: randomValue
+    pageSize: randomValue
+    next-timer-expired-interval: randomValue
+    documentMaxSize: randomValue
+    tokenUri: randomValue
+    authorizationUri: randomValue
+    responseMode: randomValue
+    prompt: randomValue
+
+bus:
+  next-timer-expired: randomValue
+  senders:
+    - label: randomValue
+      name: randomValue
+      aRandomKey: randomValue
+      send-timeout-in-second: randomValue
+      nb-retry-on-send-timeout-max: randomValue
+      metadata:
+        - pen='tong'
+        - block='service'
+    - aRandomKey: randomValue
+      label: randomValue
+      metadata:
+        - pen='tong'
+        - block='unknown'
+        - event_type=state.toString()
+      name: randomValue
+      nb-retry-on-send-timeout-max: randomValue
+      send-timeout-in-second: randomValue
+  subscriptions:
+    - aRandomKey: randomValue
+      event-class: randomValue
+      label: randomValue
+      name: randomValue
+      pool-size: randomValue
+      waterScreen: randomValue
+    - label: randomValue
+      aRandomKey: randomValue
+      name: randomValue
+      pool-size: randomValue
+      wrapper-builder: randomValue
+      event-class: randomValue
+      scheduleMaxTimeThreshold: randomValue
+      scheduleRetryCountThreshold: randomValue
+      schedule-next-on-exception:
+        - Hey
+        - Oy
+        - (?i)randomValue
+        - randomValue
+      deadletter:
+        enabled: randomValue
+        event-class: randomValue
+    - label: randomValue
+      aRandomKey: randomValue
+      name: randomValue
+      pool-size: randomValue
+      event-class: randomValue
+cognito:
+  url: randomValue
+  client-id-prop: randomValue
+  client-secret-prop: randomValue
+  audience: randomValue
+  grant_type: randomValue
+  pen: randomValue
+ok-http:
+  config:
+    default:
+      connectionTimeout: randomValue
+      readTimeout: randomValue
+  client:
+    config:
+      mycompany.value: randomValue
+    document-client.uri: randomValue
+    constraint-client.uri: randomValue
+    subscription-client.uri: randomValue
+    import-history-client.uri: randomValue
+
+file:
+  ignore-small-picture: randomValue
+  constraint:
+    maxPxWidth: randomValue
+    maxPxHeight: randomValue
+    minPxWidth: randomValue
+    minPxHeight: randomValue
+    maxMbSize: randomValue
+history:
+  release-date: randomValue
+  days-limit: randomValue
+
+apiVersion: randomValue
+kind: randomValue
+metadata:
+  namespace: randomValue
+  name: randomValue
+spec:
+  objective:
+    type: randomValue
+    goal: randomValue
+    objectiveMetricName: randomValue
+    additionalMetricNames:
+      - Train-accuracy
+  algorithm:
+    algorithmName: randomValue
+  parallelTrialCount: randomValue
+  maxTrialCount: randomValue
+  maxFailedTrialCount: randomValue
+  parameters:
+    - name: randomValue
+      parameterType: randomValue
+      feasibleSpace:
+        min: randomValue
+        max: randomValue
+    - name: randomValue
+      parameterType: randomValue
+      feasibleSpace:
+        min: randomValue
+        max: randomValue
+    - name: randomValue
+      parameterType: randomValue
+      feasibleSpace:
+        list:
+          - sgd
+          - adam
+          - ftrl
+  trialTemplate:
+    primaryContainerName: randomValue
+    trialParameters:
+      - name: randomValue
+        description: randomValue
+        reference: randomValue
+      - name: randomValue
+        description: randomValue
+        reference: randomValue
+      - name: randomValue
+        description: randomValue
+        reference: randomValue
+    trialSpec:
+      apiVersion: randomValue
+      kind: randomValue
+      spec:
+        template:
+          spec:
+            containers:
+              - name: randomValue
+                image: randomValue
+                command:
+                  - "python3"
+                  - "/opt/mxnet-mnist/mnist.py"
+                  - "--batch-size=64"
+                  - "--lr=${trialParameters.learningRate}"
+                  - "--num-layers=${trialParameters.numberLayers}"
+                  - "--optimizer=${trialParameters.optimizer}"
+            restartPolicy: randomValue

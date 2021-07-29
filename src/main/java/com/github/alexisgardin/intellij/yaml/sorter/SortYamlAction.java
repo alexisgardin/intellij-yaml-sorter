@@ -20,15 +20,20 @@ import java.util.Map;
 
 
 public class SortYamlAction extends AnAction {
+  private DumperOptions options;
+
+  public SortYamlAction() {
+
+     options = new DumperOptions();
+    options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
+  }
 
   @Override
   public void update(AnActionEvent e) {
-    if (ActionPlaces.isPopupPlace(e.getPlace())) {
       PsiFile psiFile = e.getData(CommonDataKeys.PSI_FILE);
       final String defaultExtension = psiFile.getFileType().getDefaultExtension();
       this.getTemplatePresentation()
           .setEnabledAndVisible(defaultExtension.equals("yml") || defaultExtension.equals("yaml"));
-    }
   }
 
   @Override
@@ -37,8 +42,6 @@ public class SortYamlAction extends AnAction {
     final Editor editor = e.getRequiredData(CommonDataKeys.EDITOR);
     final Project project = e.getRequiredData(CommonDataKeys.PROJECT);
     final Document document = editor.getDocument();
-    DumperOptions options = new DumperOptions();
-    options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
 
     Yaml yaml = new Yaml(options);
 
@@ -54,6 +57,10 @@ public class SortYamlAction extends AnAction {
     );
   }
 
+  public String mapToYaml(Map<String, Object> map){
+        Yaml yaml = new Yaml(options);
+        return yaml.dump(map);
+  }
   public Map<String, Object> sortMap(Map<String, Object> initMap){
     final Map<String, Object> sortedMap = this.sortByKey(initMap);
     for (Map.Entry<String, Object> entry : sortedMap.entrySet()) {
@@ -71,14 +78,18 @@ public class SortYamlAction extends AnAction {
       for (Map.Entry<String, Object> recurEntry : value.entrySet()) {
         sortMapRecursive(recurEntry);
       }
-    } else if (val instanceof List){
-      for (Object listValue: (List)val) {
+    } else if (val instanceof ArrayList){
+      for (int i = 0; i < ((ArrayList) val).size(); i++) {
+        Object listValue = ((ArrayList) val).get(i);
         if(listValue instanceof Map){
-          for (Map.Entry<?, ?> recurEntry : ((Map<?, ?>) listValue).entrySet()) {
+          final Map<String, Object> value = sortByKey((Map<String, Object>) listValue);
+          ((ArrayList) val).set(i, value);
+          for (Map.Entry<?, ?> recurEntry : value.entrySet()) {
             sortMapRecursive((Map.Entry<String, Object>) recurEntry);
           }
         }
       }
+      entry.setValue(val);
     }
   }
 
