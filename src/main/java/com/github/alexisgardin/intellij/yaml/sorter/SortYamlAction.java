@@ -1,6 +1,5 @@
 package com.github.alexisgardin.intellij.yaml.sorter;
 
-import com.intellij.openapi.actionSystem.ActionPlaces;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
@@ -24,16 +23,18 @@ public class SortYamlAction extends AnAction {
 
   public SortYamlAction() {
 
-     options = new DumperOptions();
+    options = new DumperOptions();
     options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
   }
 
   @Override
   public void update(AnActionEvent e) {
-      PsiFile psiFile = e.getData(CommonDataKeys.PSI_FILE);
-      final String defaultExtension = psiFile.getFileType().getDefaultExtension();
-      this.getTemplatePresentation()
-          .setEnabledAndVisible(defaultExtension.equals("yml") || defaultExtension.equals("yaml"));
+    PsiFile psiFile = e.getData(CommonDataKeys.PSI_FILE);
+    final String defaultExtension = psiFile.getFileType().getDefaultExtension();
+
+    Project project = e.getProject();
+    e.getPresentation().setEnabledAndVisible(
+        project != null && (defaultExtension.equals("yml") || defaultExtension.equals("yaml")));
   }
 
   @Override
@@ -57,11 +58,12 @@ public class SortYamlAction extends AnAction {
     );
   }
 
-  public String mapToYaml(Map<String, Object> map){
-        Yaml yaml = new Yaml(options);
-        return yaml.dump(map);
+  public String mapToYaml(Map<String, Object> map) {
+    Yaml yaml = new Yaml(options);
+    return yaml.dump(map);
   }
-  public Map<String, Object> sortMap(Map<String, Object> initMap){
+
+  public Map<String, Object> sortMap(Map<String, Object> initMap) {
     final Map<String, Object> sortedMap = this.sortByKey(initMap);
     for (Map.Entry<String, Object> entry : sortedMap.entrySet()) {
       sortMapRecursive(entry);
@@ -69,19 +71,19 @@ public class SortYamlAction extends AnAction {
     return sortedMap;
   }
 
-  public void sortMapRecursive(Map.Entry<String, Object> entry){
+  public void sortMapRecursive(Map.Entry<String, Object> entry) {
     final Object val = entry.getValue();
-    if(val instanceof Map){
+    if (val instanceof Map) {
       final Map<String, Object> value = sortByKey(
           (Map<String, Object>) val);
       entry.setValue(value);
       for (Map.Entry<String, Object> recurEntry : value.entrySet()) {
         sortMapRecursive(recurEntry);
       }
-    } else if (val instanceof ArrayList){
+    } else if (val instanceof ArrayList) {
       for (int i = 0; i < ((ArrayList) val).size(); i++) {
         Object listValue = ((ArrayList) val).get(i);
-        if(listValue instanceof Map){
+        if (listValue instanceof Map) {
           final Map<String, Object> value = sortByKey((Map<String, Object>) listValue);
           ((ArrayList) val).set(i, value);
           for (Map.Entry<?, ?> recurEntry : value.entrySet()) {
@@ -93,7 +95,7 @@ public class SortYamlAction extends AnAction {
     }
   }
 
-  private  <K extends String, V> Map<K, V> sortByKey(Map<K, V> map) {
+  private <K extends String, V> Map<K, V> sortByKey(Map<K, V> map) {
     List<Map.Entry<K, V>> list = new ArrayList<>(map.entrySet());
     list.sort(Map.Entry.comparingByKey());
 
