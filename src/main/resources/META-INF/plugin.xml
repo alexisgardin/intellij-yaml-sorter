@@ -3,6 +3,36 @@
     <name>Yaml Sorter</name>
     <vendor>alexisgardin</vendor>
 
+
+    <!-- Description of the plugin.
+         Should be short and to the point.
+         Start the description with a verb in a present simple form such as
+         "integrates", "synchronizes", "adds support for" or "lets you view".
+         Don't use marketing adjectives like "simple", "lightweight", or "professional".
+         Don't repeat the name of the plugin.
+         For plugins that add language/platform/framework support, the description MUST specify
+         the version of the corresponding language/platform/framework.
+         Don't mention the IDE compatibility. E.g., don't say "Adds support to IntelliJ IDEA for..."
+         Displayed in the "Plugins" settings dialog and the plugin repository Web interface.
+         Simple HTML elements can be included between <![CDATA[  ]]> tags.  -->
+    <description>Allow you to sort your yaml configuration/file by key in ascending order. Right click on your file and sort your yaml !</description>
+
+    <!-- Description of changes in the latest version of the plugin.
+         Displayed in the "Plugins" settings dialog and the plugin repository Web interface.
+         Simple HTML elements can be included between <![CDATA[  ]]> tags.  -->
+    <change-notes>1.0.0 - Basic sort of your yml/yaml file</change-notes>
+    <change-notes>1.0.1 - Add new build range for intellij IDE.</change-notes>
+
+    <!-- Plugin version
+         Recommended format is BRANCH.BUILD.FIX (MAJOR.MINOR.FIX)
+         Displayed in the "Plugins" settings dialog and the plugin repository Web interface.  -->
+    <version>1.0.1</version>
+
+    <!-- The vendor of the plugin.
+         The optional "url" attribute specifies the URL of the vendor homepage.
+         The optional "email" attribute specifies the e-mail address of the vendor.
+         Displayed in the "Plugins" settings dialog and the plugin repository Web interface. -->
+
     <!-- Product and plugin compatibility requirements -->
     <!-- https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
     <depends>com.intellij.modules.platform</depends>

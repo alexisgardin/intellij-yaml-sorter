@@ -5,7 +5,7 @@
 [![Downloads](https://img.shields.io/jetbrains/plugin/d/PLUGIN_ID.svg)](https://plugins.jetbrains.com/plugin/PLUGIN_ID)
 
 <!-- Plugin description -->
-A plugin that allow you to sort your yaml by ascending order.
+Allow you to sort your yaml configuration/file by key in ascending order. Right click on your file and sort your yaml !
 <!-- Plugin description end -->
 
 
