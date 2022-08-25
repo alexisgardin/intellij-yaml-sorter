@@ -2,6 +2,9 @@
 
 # intellij-yaml-sorter Changelog
 
+## 1.0.2
+### Changed
+- accept new intellij version
 ## 1.0.1
 ### Changed
 - accept new intellij version
