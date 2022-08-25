@@ -22,11 +22,12 @@
          Simple HTML elements can be included between <![CDATA[  ]]> tags.  -->
     <change-notes>1.0.0 - Basic sort of your yml/yaml file</change-notes>
     <change-notes>1.0.1 - Add new build range for intellij IDE.</change-notes>
+    <change-notes>1.0.2 - Add new build range for intellij IDE.</change-notes>
 
     <!-- Plugin version
          Recommended format is BRANCH.BUILD.FIX (MAJOR.MINOR.FIX)
          Displayed in the "Plugins" settings dialog and the plugin repository Web interface.  -->
-    <version>1.0.1</version>
+    <version>1.0.2</version>
 
     <!-- The vendor of the plugin.
          The optional "url" attribute specifies the URL of the vendor homepage.
