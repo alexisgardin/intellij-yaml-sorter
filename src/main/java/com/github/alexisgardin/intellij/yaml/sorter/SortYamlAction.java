@@ -7,6 +7,7 @@ import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
 import org.jetbrains.annotations.NotNull;
 import org.yaml.snakeyaml.DumperOptions;
@@ -29,8 +30,8 @@ public class SortYamlAction extends AnAction {
 
   @Override
   public void update(AnActionEvent e) {
-    PsiFile psiFile = e.getData(CommonDataKeys.PSI_FILE);
-    final String defaultExtension = psiFile.getFileType().getDefaultExtension();
+    VirtualFile virtualFile = e.getData(CommonDataKeys.EDITOR).getVirtualFile();
+    final String defaultExtension = virtualFile.getFileType().getDefaultExtension();
 
     Project project = e.getProject();
     e.getPresentation().setEnabledAndVisible(
