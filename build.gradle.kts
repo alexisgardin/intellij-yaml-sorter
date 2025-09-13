@@ -48,6 +48,12 @@ intellijPlatform {
     pluginConfiguration {
         name.set(properties("pluginName"))
     }
+
+    pluginVerification {
+        ides {
+            recommended()
+        }
+    }
 }
 
 // Configure gradle-changelog-plugin plugin.
