@@ -1,24 +1,13 @@
 package com.github.alexisgardin.intellij.yaml.sorter;
 
-import com.intellij.openapi.actionSystem.AnAction;
-import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.CommonDataKeys;
-import com.intellij.openapi.command.WriteCommandAction;
-import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiFile;
-import org.jetbrains.annotations.NotNull;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
-public class SortYamlAction extends AnAction {
+public class SortYamlAction {
   private DumperOptions options;
 
   public SortYamlAction() {
@@ -27,35 +16,60 @@ public class SortYamlAction extends AnAction {
     options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
   }
 
-  @Override
-  public void update(AnActionEvent e) {
-    PsiFile psiFile = e.getData(CommonDataKeys.PSI_FILE);
-    final String defaultExtension = psiFile.getFileType().getDefaultExtension();
 
-    Project project = e.getProject();
-    e.getPresentation().setEnabledAndVisible(
-        project != null && (defaultExtension.equals("yml") || defaultExtension.equals("yaml")));
+  public String sortYamlDocuments(String yamlText) {
+    // Handle multi-document YAML files separated by ---
+    if (yamlText.contains("---")) {
+      return sortMultiDocumentYaml(yamlText);
+    } else {
+      return sortSingleDocumentYaml(yamlText);
+    }
   }
 
-  @Override
-  public void actionPerformed(@NotNull AnActionEvent e) {
-    // Get all the required data from data keys
-    final Editor editor = e.getRequiredData(CommonDataKeys.EDITOR);
-    final Project project = e.getRequiredData(CommonDataKeys.PROJECT);
-    final Document document = editor.getDocument();
+  private String sortMultiDocumentYaml(String yamlText) {
+    // Split documents by --- separator
+    String[] documents = yamlText.split("---");
+    StringBuilder result = new StringBuilder();
 
-    Yaml yaml = new Yaml(options);
+    for (int i = 0; i < documents.length; i++) {
+      String document = documents[i].trim();
 
-    final PsiFile data = e.getDataContext().getData(CommonDataKeys.PSI_FILE);
-    Map<String, Object> yamlMap =
-        yaml.load(data.getText());
-    final Map<String, Object> stringObjectMap = sortMap(yamlMap);
-    System.out.println(stringObjectMap);
-    final String dump = yaml.dump(stringObjectMap);
-    System.out.println(dump);
-    WriteCommandAction.runWriteCommandAction(project, () ->
-        document.setText(dump)
-    );
+      if (!document.isEmpty()) {
+        // Add document separator
+        if (result.length() > 0) {
+          result.append("---\n");
+        } else {
+          result.append("---\n");
+        }
+
+        // Process and sort the document
+        String sortedDoc = sortSingleDocumentYaml(document);
+        result.append(sortedDoc);
+
+        if (!sortedDoc.endsWith("\n")) {
+          result.append("\n");
+        }
+      }
+    }
+
+    return result.toString();
+  }
+
+  private String sortSingleDocumentYaml(String yamlText) {
+    try {
+      Yaml yaml = new Yaml(options);
+      Map<String, Object> yamlMap = yaml.load(yamlText);
+
+      if (yamlMap == null) {
+        return yamlText; // Return original if parsing fails
+      }
+
+      final Map<String, Object> sortedMap = sortMap(yamlMap);
+      return yaml.dump(sortedMap);
+    } catch (Exception ex) {
+      // Return original text if parsing fails
+      return yamlText;
+    }
   }
 
   public String mapToYaml(Map<String, Object> map) {
@@ -81,18 +95,36 @@ public class SortYamlAction extends AnAction {
         sortMapRecursive(recurEntry);
       }
     } else if (val instanceof ArrayList) {
-      for (int i = 0; i < ((ArrayList) val).size(); i++) {
-        Object listValue = ((ArrayList) val).get(i);
-        if (listValue instanceof Map) {
-          final Map<String, Object> value = sortByKey((Map<String, Object>) listValue);
-          ((ArrayList) val).set(i, value);
-          for (Map.Entry<?, ?> recurEntry : value.entrySet()) {
-            sortMapRecursive((Map.Entry<String, Object>) recurEntry);
+      ArrayList arrayList = (ArrayList) val;
+
+      // Check if this is a string array and sort it
+      if (isStringArray(arrayList)) {
+        List<String> sortedStrings = ((List<String>) arrayList).stream()
+            .sorted()
+            .collect(Collectors.toList());
+        entry.setValue(new ArrayList<>(sortedStrings));
+      } else {
+        // Handle arrays of objects
+        for (int i = 0; i < arrayList.size(); i++) {
+          Object listValue = arrayList.get(i);
+          if (listValue instanceof Map) {
+            final Map<String, Object> value = sortByKey((Map<String, Object>) listValue);
+            arrayList.set(i, value);
+            for (Map.Entry<?, ?> recurEntry : value.entrySet()) {
+              sortMapRecursive((Map.Entry<String, Object>) recurEntry);
+            }
           }
         }
+        entry.setValue(arrayList);
       }
-      entry.setValue(val);
     }
+  }
+
+  private boolean isStringArray(ArrayList<?> arrayList) {
+    if (arrayList.isEmpty()) {
+      return false;
+    }
+    return arrayList.stream().allMatch(item -> item instanceof String);
   }
 
   private <K extends String, V> Map<K, V> sortByKey(Map<K, V> map) {

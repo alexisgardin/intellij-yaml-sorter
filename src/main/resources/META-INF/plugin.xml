@@ -15,14 +15,29 @@
          Don't mention the IDE compatibility. E.g., don't say "Adds support to IntelliJ IDEA for..."
          Displayed in the "Plugins" settings dialog and the plugin repository Web interface.
          Simple HTML elements can be included between <![CDATA[  ]]> tags.  -->
-    <description>Allow you to sort your yaml configuration/file by key in ascending order. Right click on your file and sort your yaml !</description>
+    <description>Sort YAML files by key in ascending order with support for multi-document files, string arrays, and preview mode. Features include direct sorting, diff preview with IntelliJ's native viewer, and comprehensive YAML structure handling.</description>
 
     <!-- Description of changes in the latest version of the plugin.
          Displayed in the "Plugins" settings dialog and the plugin repository Web interface.
          Simple HTML elements can be included between <![CDATA[  ]]> tags.  -->
-    <change-notes>1.0.0 - Basic sort of your yml/yaml file</change-notes>
-    <change-notes>1.0.1 - Add new build range for intellij IDE.</change-notes>
-    <change-notes>1.0.2 - Add new build range for intellij IDE.</change-notes>
+    <change-notes><![CDATA[
+    <h3>1.1.0 - Major Feature Update</h3>
+    <ul>
+        <li>✨ <strong>Preview Mode</strong> - New "Sort YAML with Preview" action using IntelliJ's native diff viewer</li>
+        <li>🚀 <strong>Direct Sort</strong> - New "Sort YAML" action for immediate sorting</li>
+        <li>📄 <strong>Multi-document YAML</strong> - Support for files with multiple documents separated by `---`</li>
+        <li>🔤 <strong>String Array Sorting</strong> - Automatically sorts string arrays alphabetically</li>
+        <li>🏗️ <strong>IntelliJ 2025+ Support</strong> - Compatible with latest IDE versions (build 241-252.*)</li>
+        <li>☕ <strong>Java 21 Support</strong> - Updated to modern Java runtime</li>
+        <li>🧪 <strong>Comprehensive Testing</strong> - 8 test cases covering all functionality</li>
+    </ul>
+    <h4>Previous Versions</h4>
+    <ul>
+        <li>1.0.2 - Build range updates for IntelliJ compatibility</li>
+        <li>1.0.1 - Build range updates for IntelliJ compatibility</li>
+        <li>1.0.0 - Basic YAML sorting functionality</li>
+    </ul>
+    ]]></change-notes>
 
     <!-- Plugin version
          Recommended format is BRANCH.BUILD.FIX (MAJOR.MINOR.FIX)
@@ -36,14 +51,26 @@
 
     <!-- Product and plugin compatibility requirements -->
     <!-- https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
+    <idea-version since-build="241" until-build="251.*"/>
     <depends>com.intellij.modules.platform</depends>
 
 
     <actions>
-        <action id="com.github.alexisgardin.intellij.yaml.sorter.SortYamlAction"
-                class="com.github.alexisgardin.intellij.yaml.sorter.SortYamlAction" text="Sort Yaml"
-                description="Sort your yaml">
+        <group id="com.github.alexisgardin.intellij.yaml.sorter.SortYamlGroup" text="YAML Sorter" description="Sort YAML files" popup="true">
             <add-to-group group-id="EditorPopupMenu" anchor="first"/>
-        </action>
+
+            <action id="com.github.alexisgardin.intellij.yaml.sorter.SortYamlDirectAction"
+                    class="com.github.alexisgardin.intellij.yaml.sorter.SortYamlDirectAction"
+                    text="Sort YAML"
+                    description="Sort YAML file directly without preview">
+            </action>
+
+            <action id="com.github.alexisgardin.intellij.yaml.sorter.SortYamlWithPreviewAction"
+                    class="com.github.alexisgardin.intellij.yaml.sorter.SortYamlWithPreviewAction"
+                    text="Sort YAML with Preview"
+                    description="Preview YAML changes before applying sort">
+            </action>
+
+        </group>
     </actions>
 </idea-plugin>

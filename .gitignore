@@ -1,4 +1,86 @@
-.gradle
-.idea
-build
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.properties
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+.run/
+.intellijPlatform/
+
+# Plugin artifacts
+*.jar
+*.zip
+plugin.zip
+
+# Logs
+*.log
+logs/
+
+# Java
+*.class
+*.war
+*.ear
+*.nar
+hs_err_pid*
+
+# Kotlin
+*.kt.swp
+
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+
+# Linux
+*~
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+.#*
+
+# Test outputs
+test-output/
+test-results/
+
+# IDE specific
+.vscode/
+.eclipse/
+.metadata/
+
+# Deployment scripts (sensitive)
 deploy.sh
+publish.sh
+secrets.properties
+
+# Coverage
+.jacoco/
+*.exec
+
+# Local configuration
+local.properties
+gradle-app.setting

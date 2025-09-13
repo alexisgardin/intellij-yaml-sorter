@@ -1,0 +1,37 @@
+---
+database:
+  driver: postgresql
+  name: myapp
+server:
+  host: localhost
+  port: 8080
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: webapp
+    environment: test
+  name: test-pod
+spec:
+  containers:
+  - image: nginx
+    name: app
+    ports:
+    - containerPort: 80
+---
+config:
+  features:
+  - alpha-feature
+  - beta-feature
+  - zebra-feature
+  logging:
+    format: json
+    level: debug
+  servers:
+  - name: server3
+    url: http://c.example.com
+  - name: server1
+    url: http://a.example.com
+  - name: server2
+    url: http://b.example.com

@@ -1,0 +1,27 @@
+application:
+  environments:
+  - development
+  - production
+  - staging
+  features:
+  - alpha-logging
+  - beta-monitoring
+  - zebra-integration
+  name: test-app
+config:
+  allowed-methods:
+  - DELETE
+  - GET
+  - POST
+  - PUT
+  supported-formats:
+  - csv
+  - json
+  - xml
+  - yaml
+database:
+  migrations:
+  - 001_initial
+  - 002_add_products
+  - 003_add_users
+  - 004_add_orders

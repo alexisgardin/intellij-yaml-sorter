@@ -2,35 +2,31 @@ apiVersion: randomValue
 bus:
   next-timer-expired: randomValue
   senders:
-    -
-      aRandomKey: randomValue
+    - aRandomKey: randomValue
       label: randomValue
       metadata:
-        - pen='tong'
         - block='service'
+        - pen='tong'
       name: randomValue
       nb-retry-on-send-timeout-max: randomValue
       send-timeout-in-second: randomValue
-    -
-      aRandomKey: randomValue
+    - aRandomKey: randomValue
       label: randomValue
       metadata:
-        - pen='tong'
         - block='unknown'
         - event_type=state.toString()
+        - pen='tong'
       name: randomValue
       nb-retry-on-send-timeout-max: randomValue
       send-timeout-in-second: randomValue
   subscriptions:
-    -
-      aRandomKey: randomValue
+    - aRandomKey: randomValue
       event-class: randomValue
       label: randomValue
       name: randomValue
       pool-size: randomValue
       waterScreen: randomValue
-    -
-      aRandomKey: randomValue
+    - aRandomKey: randomValue
       deadletter:
         enabled: randomValue
         event-class: randomValue
@@ -39,15 +35,14 @@ bus:
       name: randomValue
       pool-size: randomValue
       schedule-next-on-exception:
+        - (?i)randomValue
         - Hey
         - Oy
-        - (?i)randomValue
         - randomValue
       scheduleMaxTimeThreshold: randomValue
       scheduleRetryCountThreshold: randomValue
       wrapper-builder: randomValue
-    -
-      aRandomKey: randomValue
+    - aRandomKey: randomValue
       event-class: randomValue
       label: randomValue
       name: randomValue
@@ -125,39 +120,33 @@ spec:
     type: randomValue
   parallelTrialCount: randomValue
   parameters:
-    -
-      feasibleSpace:
+    - feasibleSpace:
         max: randomValue
         min: randomValue
       name: randomValue
       parameterType: randomValue
-    -
-      feasibleSpace:
+    - feasibleSpace:
         max: randomValue
         min: randomValue
       name: randomValue
       parameterType: randomValue
-    -
-      feasibleSpace:
+    - feasibleSpace:
         list:
-          - sgd
           - adam
           - ftrl
+          - sgd
       name: randomValue
       parameterType: randomValue
   trialTemplate:
     primaryContainerName: randomValue
     trialParameters:
-      -
-        description: randomValue
+      - description: randomValue
         name: randomValue
         reference: randomValue
-      -
-        description: randomValue
+      - description: randomValue
         name: randomValue
         reference: randomValue
-      -
-        description: randomValue
+      - description: randomValue
         name: randomValue
         reference: randomValue
     trialSpec:
@@ -167,14 +156,13 @@ spec:
         template:
           spec:
             containers:
-              -
-                command:
-                  - python3
-                  - /opt/mxnet-mnist/mnist.py
+              - command:
                   - "--batch-size=64"
                   - "--lr=${trialParameters.learningRate}"
                   - "--num-layers=${trialParameters.numberLayers}"
                   - "--optimizer=${trialParameters.optimizer}"
+                  - "/opt/mxnet-mnist/mnist.py"
+                  - "python3"
                 image: randomValue
                 name: randomValue
             restartPolicy: randomValue
